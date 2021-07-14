@@ -1,0 +1,294 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+	desc "Slack"
+	lane :slack_build do
+		slack(
+			message: "Some thing goes wrong\nasdklfajsdlkf al",
+			success: true,
+			slack_url: "https://hooks.slack.com/services/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",
+			default_payloads: [],	
+		)
+	end	
+
+	desc "Doclink Patient AdHoc build"
+	lane :patient do
+    	# add actions here: https://docs.fastlane.tools/actions
+    	project_info = {
+			xcodeproj: 'Doclink.xcodeproj', # optional
+	        target: 'Doclink', # optional, or `scheme`
+	        build_configuration_name: 'Distribution'
+	    }
+
+		# increament in build number
+		increment_build_number_in_xcodeproj(
+			project_info
+		)
+
+		# get aap version
+		version = get_version_number(
+			xcodeproj: 'Doclink.xcodeproj', # optional
+	        target: 'Doclink', # optional, or `scheme`
+		)
+
+		# get build number
+		build_number = get_build_number_from_xcodeproj(project_info)
+
+		clean_build_artifacts
+		clear_derived_data
+
+		# define ipa name with target, version and build number
+		app_name = 'Doclink_Patient_'+version+'('+build_number+')'+'.ipa'
+
+		print "\n=====\n"
+		print app_name
+		print "\n=====\n"
+
+		# build ios app - xcodebuild
+		build_ios_app(
+			workspace: "Doclink.xcworkspace",
+			configuration: "Distribution",
+			scheme: "Doclink",
+			silent: true,
+			clean: true,
+			output_directory: "./build", # Destination directory. Defaults to current directory.
+			output_name: app_name,       # specify the name of the .ipa file to generate (including file extension)
+			include_symbols: false,
+  			include_bitcode: false,
+  			export_method: 'ad-hoc',
+  			export_options: { 
+  				provisioningProfiles: {
+  					'com.doclink.patient' => 'DocLinkPatientAdHoc' 
+  				} 
+  			})
+		diawi(
+			token: "TRynVjdWvmrglbM4jDGjGqwjcwZ3Gv660e26HW2bEW",
+			file: './build/'+app_name
+			)
+
+		diawi_link = Actions.lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]
+		if (diawi_link != "") 
+			print "\n"
+			print "Doclink Patient iOS build link: "+diawi_link
+			print "\n"
+			print "Version: "+version+" ("+build_number+")"
+			print "\n\n"
+			print "Release notes:"
+			print "\n"
+		end
+    	# add actions here: https://docs.fastlane.tools/actions
+
+		slack(
+			message: "Doclink Patient iOS build link: "+diawi_link+"\n"+"Version: "+version+" ("+build_number+")",
+			success: true,
+			slack_url: "https://hooks.slack.com/services/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",
+			default_payloads: [],	
+		)
+
+    end
+
+    desc "Doclink Doctor AdHoc build"
+    lane :doctor do
+    	# add actions here: https://docs.fastlane.tools/actions
+    	project_info = {
+			xcodeproj: 'Doclink.xcodeproj', # optional
+	        target: 'Doctor', # optional, or `scheme`
+	        build_configuration_name: 'Distribution'
+	    }
+
+		# increament in build number
+		increment_build_number_in_xcodeproj(
+			project_info
+		)
+
+		# get aap version
+		version = get_version_number(
+			xcodeproj: 'Doclink.xcodeproj', # optional
+	        target: 'Doctor', # optional, or `scheme`
+		)
+
+		# get build number
+		build_number = get_build_number_from_xcodeproj(project_info)
+
+		clean_build_artifacts
+		clear_derived_data
+
+		# define ipa name with target, version and build number
+		app_name = 'Doclink_Doctor_'+version+'('+build_number+')'+'.ipa'
+
+		print "\n=====\n"
+		print app_name
+		print "\n=====\n"
+		
+		# build ios app - xcodebuild
+		build_ios_app(
+			workspace: "Doclink.xcworkspace",
+			configuration: "Distribution",
+			scheme: "Doctor",
+			silent: true,
+			clean: true,
+			output_directory: "./build", # Destination directory. Defaults to current directory.
+			output_name: app_name,       # specify the name of the .ipa file to generate (including file extension)
+			include_symbols: false,
+  			include_bitcode: false,
+  			export_method: 'ad-hoc',
+  			export_options: { 
+  				provisioningProfiles: {
+  					'com.doclink.doctor' => 'DocLinkDoctorAdHoc' 
+  				} 
+  			})
+		diawi(
+			token: "TRynVjdWvmrglbM4jDGjGqwjcwZ3Gv660e26HW2bEW",
+			file: './build/'+app_name
+			)
+
+		diawi_link = Actions.lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]
+		if (diawi_link != "") 
+			print "\n"
+			print "Doclink Doctor iOS build link: "+diawi_link
+			print "\n"
+			print "Version: "+version+" ("+build_number+")"
+			print "\n\n"
+			print "Release notes:"
+			print "\n"
+		end
+    	# add actions here: https://docs.fastlane.tools/actions
+		slack(
+			message: "Doclink Doctor iOS build link: "+diawi_link+"\n"+"Version: "+version+" ("+build_number+")",
+			success: true,
+			slack_url: "https://hooks.slack.com/services/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",
+			default_payloads: [],	
+		)
+    end
+
+    desc "Doclink Manager AdHoc build"
+    lane :manager do
+    	# add actions here: https://docs.fastlane.tools/actions
+    	project_info = {
+			xcodeproj: 'Doclink.xcodeproj', # optional
+	        target: 'Manager', # optional, or `scheme`
+	        build_configuration_name: 'Distribution'
+	    }
+
+		# increament in build number
+		increment_build_number_in_plist(project_info)
+
+		# get aap version
+		version = get_version_number_from_plist(project_info)
+
+		# get build number
+		build = get_build_number_from_plist(project_info)
+
+		clean_build_artifacts
+		clear_derived_data
+
+		# define ipa name with target, version and build number
+		app_name = 'Doclink_Manager_'+version+'('+build+')'+'.ipa'
+
+		# build ios app - xcodebuild
+		build_ios_app(
+			workspace: "Doclink.xcworkspace",
+			configuration: "Distribution",
+			scheme: "Manager",
+			silent: true,
+			clean: true,
+  			output_directory: "./build", # Destination directory. Defaults to current directory.
+  			output_name: app_name,       # specify the name of the .ipa file to generate (including file extension)
+  			include_bitcode: false,
+  			export_method: 'ad-hoc',
+  			export_options: { 
+  				provisioningProfiles: {
+  					'com.doclink.manager' => 'DoclinkManagerAdHoc' 
+  				} 
+  			})
+		diawi(
+			token: "TRynVjdWvmrglbM4jDGjGqwjcwZ3Gv660e26HW2bEW",
+			file: './build/'+app_name
+			)
+		
+		diawi_link = Actions.lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]
+		if (diawi_link != "") 
+			print "\n"
+			print "Doclink Manager iOS build link: "+diawi_link
+			print "\n"
+			print "Version: "+version+" ("+build+")"
+			print "\n\n"
+			print "Release notes:"
+			print "\n"
+		end
+    	# add actions here: https://docs.fastlane.tools/actions
+    end
+
+	desc "Doclink Patient App Store build"
+	lane :patient_app_store do
+    	# add actions here: https://docs.fastlane.tools/actions
+    	project_info = {
+			xcodeproj: 'Doclink.xcodeproj', # optional
+	        target: 'Doclink', # optional, or `scheme`
+	        build_configuration_name: 'Release'
+	    }
+
+		# increament in build number
+		increment_build_number_in_plist(project_info)
+
+		# get aap version
+		version = get_version_number_from_plist(project_info)
+
+		# get build number
+		build = get_build_number_from_plist(project_info)
+
+		clean_build_artifacts
+		clear_derived_data
+
+		# define ipa name with target, version and build number
+		app_name = 'Doclink_Patient_'+version+'('+build+')'+'.ipa'
+
+		# build ios app - xcodebuild
+		build_ios_app(
+			workspace: "Doclink.xcworkspace",
+			configuration: "Distribution",
+			scheme: "Doclink",
+			silent: true,
+			clean: true,
+  			output_directory: "./build", # Destination directory. Defaults to current directory.
+  			output_name: app_name,       # specify the name of the .ipa file to generate (including file extension)
+  			include_bitcode: false,
+  			export_method: 'ad-hoc',
+  			export_options: { 
+  				provisioningProfiles: {
+  					'com.doclink.patient' => 'DoclinkPatientAdHoc' 
+  				} 
+  			})
+		diawi(
+			token: "TRynVjdWvmrglbM4jDGjGqwjcwZ3Gv660e26HW2bEW",
+			file: './build/'+app_name
+			)
+
+		diawi_link = Actions.lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]
+		if (diawi_link != "") 
+			print "\n"
+			print "Doclink Patient iOS build link: "+diawi_link
+			print "\n"
+			print "Version: "+version+" ("+build+")"
+			print "\n\n"
+			print "Release notes:"
+			print "\n"
+		end
+    	# add actions here: https://docs.fastlane.tools/actions
+    end
+end

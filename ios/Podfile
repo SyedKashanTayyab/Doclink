@@ -1,0 +1,106 @@
+platform :ios, '10.0'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+# shared pods
+def shared_pods
+  # Pods for Doclink
+  pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
+  pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
+  pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
+  pod 'RCTTypeSafety', :path => "../node_modules/react-native/Libraries/TypeSafety"
+  pod 'React', :path => '../node_modules/react-native/'
+  pod 'React-Core', :path => '../node_modules/react-native/'
+  pod 'React-CoreModules', :path => '../node_modules/react-native/React/CoreModules'
+  pod 'React-Core/DevSupport', :path => '../node_modules/react-native/'
+  pod 'React-RCTActionSheet', :path => '../node_modules/react-native/Libraries/ActionSheetIOS'
+  pod 'React-RCTAnimation', :path => '../node_modules/react-native/Libraries/NativeAnimation'
+  pod 'React-RCTBlob', :path => '../node_modules/react-native/Libraries/Blob'
+  pod 'React-RCTImage', :path => '../node_modules/react-native/Libraries/Image'
+  pod 'React-RCTLinking', :path => '../node_modules/react-native/Libraries/LinkingIOS'
+  pod 'React-RCTNetwork', :path => '../node_modules/react-native/Libraries/Network'
+  pod 'React-RCTSettings', :path => '../node_modules/react-native/Libraries/Settings'
+  pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text'
+  pod 'React-RCTVibration', :path => '../node_modules/react-native/Libraries/Vibration'
+  pod 'React-Core/RCTWebSocket', :path => '../node_modules/react-native/'
+
+  pod 'React-cxxreact', :path => '../node_modules/react-native/ReactCommon/cxxreact'
+  pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
+  pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
+  pod 'React-jsinspector', :path => '../node_modules/react-native/ReactCommon/jsinspector'
+  pod 'ReactCommon/jscallinvoker', :path => "../node_modules/react-native/ReactCommon"
+  pod 'ReactCommon/turbomodule/core', :path => "../node_modules/react-native/ReactCommon"
+  pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+
+  pod 'react-native-camera', path: '../node_modules/react-native-camera', subspecs: [
+    'BarcodeDetectorMLKit'
+  ]
+  
+
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone.podspec"
+  
+  # pod 'RNIKInteractiveImageLibrary', :path => '../node_modules/react-native-interactive-image-gallery'
+  
+  # pod 'RNOtpReader', :path => '../node_modules/react-native-otp-reader'
+
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
+  
+#  pod 'Firebase/Crashlytics'
+
+  # Recommended: Add the Firebase pod for Google Analytics
+#  pod 'Firebase/Analytics'
+  
+  # Old version integration https://firebase.google.com/docs/crashlytics/get-started
+  # new version is in beta https://firebase.google.com/docs/crashlytics/get-started-new-sdk?platform=ios&authuser=0
+#  pod 'Fabric', '~> 1.10.2'
+#  pod 'Crashlytics', '~> 3.14.0'
+
+  # React-Native-Share pod 
+  pod 'RNShare', :path => '../node_modules/react-native-share'
+  
+  use_native_modules!
+end
+
+# Patient Target
+target 'Doclink' do
+  
+  shared_pods
+
+
+
+
+  target 'DoclinkTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+end
+
+# Doctor Target
+target 'Doctor' do
+  
+  shared_pods
+  
+end
+
+# Manager Target
+target 'Manager' do
+  
+  shared_pods
+  
+end
+
+target 'Doclink-tvOS' do
+  # Pods for Doclink-tvOS
+
+  target 'Doclink-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

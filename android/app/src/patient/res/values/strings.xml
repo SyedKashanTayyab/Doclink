@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DocLink</string>
+    <string name="default_notification_channel_id">doclink-patient-channel</string>
+</resources>

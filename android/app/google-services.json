@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "744192579158",
+    "firebase_url": "https://doclink-46164.firebaseio.com",
+    "project_id": "doclink-46164",
+    "storage_bucket": "doclink-46164.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744192579158:android:8445d7209a7382dea44df7",
+        "android_client_info": {
+          "package_name": "com.doclink.doctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744192579158-1srso1vfd52tj5f577uhepo3sv7h0m0o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApBkpVvLrcWMRtdoqmIkUJpnqpuNDzst8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "744192579158-1srso1vfd52tj5f577uhepo3sv7h0m0o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "744192579158-v7oq3t9ps3dhfrrrq7mn2rdjpi625091.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doclink.manager"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744192579158:android:26b07dbca6472d7da44df7",
+        "android_client_info": {
+          "package_name": "com.doclink.manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744192579158-1srso1vfd52tj5f577uhepo3sv7h0m0o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApBkpVvLrcWMRtdoqmIkUJpnqpuNDzst8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "744192579158-1srso1vfd52tj5f577uhepo3sv7h0m0o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "744192579158-v7oq3t9ps3dhfrrrq7mn2rdjpi625091.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doclink.manager"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744192579158:android:0c965490ef27d3aea44df7",
+        "android_client_info": {
+          "package_name": "com.doclink.patient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744192579158-1srso1vfd52tj5f577uhepo3sv7h0m0o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApBkpVvLrcWMRtdoqmIkUJpnqpuNDzst8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "744192579158-1srso1vfd52tj5f577uhepo3sv7h0m0o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "744192579158-v7oq3t9ps3dhfrrrq7mn2rdjpi625091.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doclink.manager"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

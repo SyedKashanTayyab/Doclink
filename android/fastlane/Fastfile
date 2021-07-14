@@ -1,0 +1,198 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+ 
+  desc "Submit a new Doclink Patient Build"
+  lane :patient do
+
+    # path of app build gradle
+    gradle_file_path = "app/build.gradle"
+
+    # increase version code
+    android_set_version_code(
+      gradle_file: gradle_file_path # optional
+      )
+
+    version_number = android_get_version_name(
+      gradle_file: gradle_file_path # optional
+      )
+
+    build_number = android_get_version_code(
+      gradle_file: gradle_file_path # optional
+      )
+
+    gradle(
+      print_command: true,
+      print_command_output: true,
+      task: "clean"
+      )
+    
+    # put version_code
+    gradle(
+      task: 'assemble',
+      flavor: "Patient",
+      build_type: 'Release',
+      print_command: true,
+      print_command_output: true
+      )
+
+    # get output folder path
+    file_path = lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0]
+
+    copy_artifacts(
+      keep_original: true,
+      target_path: "_builds",
+      artifacts: [file_path]
+      )
+
+    # Get File name
+    file_name = file_path.gsub(/\/.*\//,"")
+
+    diawi(
+      token: "TRynVjdWvmrglbM4jDGjGqwjcwZ3Gv660e26HW2bEW",
+      file: './_builds/'+file_name,
+      )
+
+    diawi_link = lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]
+
+    if (diawi_link != "") 
+      print "\n"
+      print "Doclink Patient Android build link: "+diawi_link
+      print "\n"
+      print "Version: "+version_number+" ("+build_number+")"
+      print "\n\n"
+      print "Release notes:"
+      print "\n"
+    end
+
+    slack(
+			message: "Doclink Patient Android build link: "+diawi_link+"\n"+"Version: "+version_number+" ("+build_number+")",
+			success: true,
+			slack_url: "https://hooks.slack.com/services/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",
+			default_payloads: [],	
+		)
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  desc "Submit a new Doclink Doctor Build"
+  lane :doctor do
+
+    # path of app build gradle
+    gradle_file_path = "app/build.gradle"
+
+    # increase version code
+    android_set_version_code(
+      gradle_file: gradle_file_path # optional
+      )
+
+    version_number = android_get_version_name(
+      gradle_file: gradle_file_path # optional
+      )
+
+    build_number = android_get_version_code(
+      gradle_file: gradle_file_path # optional
+      )
+
+    gradle(
+      print_command: true,
+      print_command_output: true,
+      task: "clean"
+      )
+    
+    # put version_code
+    gradle(
+      task: 'assemble',
+      flavor: "Doctor",
+      build_type: 'Release',
+      print_command: true,
+      print_command_output: true
+      )
+
+    # get output folder path
+    file_path = lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0]
+
+    copy_artifacts(
+      keep_original: true,
+      target_path: "_builds",
+      artifacts: [file_path]
+      )
+
+    # Get File name
+    file_name = file_path.gsub(/\/.*\//,"")
+
+    diawi(
+      token: "TRynVjdWvmrglbM4jDGjGqwjcwZ3Gv660e26HW2bEW",
+      file: './_builds/'+file_name,
+      )
+
+    diawi_link = lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]
+
+    if (diawi_link != "") 
+      print "\n"
+      print "Doclink Doctor Android build link: "+diawi_link
+      print "\n"
+      print "Version: "+version_number+" ("+build_number+")"
+      print "\n\n"
+      print "Release notes:"
+      print "\n"
+    end
+
+    slack(
+			message: "Doclink Doctor Android build link: "+diawi_link+"\n"+"Version: "+version_number+" ("+build_number+")",
+			success: true,
+			slack_url: "https://hooks.slack.com/services/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",
+			default_payloads: [],	
+		)
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  lane :upload do
+    target = prompt(
+      text: 'Target: ',
+    )
+    version_number = prompt(
+      text: 'Version Number: ',
+    )
+    build_number = prompt(
+      text: 'Build Number: ',
+    )
+
+    file_name = 'DocLink_' + target + '_v' + version_number + '('+ build_number +')_release.apk'
+    print file_name
+
+    diawi(
+      token: "TRynVjdWvmrglbM4jDGjGqwjcwZ3Gv660e26HW2bEW",
+      file: './_builds/'+file_name,
+      )
+
+    diawi_link = lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]
+
+    if (diawi_link != "") 
+      print "\n"
+      print "Doclink Doctor Android build link: "+diawi_link
+      print "\n"
+      print "Version: "+version_number+" ("+build_number+")"
+      print "\n\n"
+      print "Release notes:"
+      print "\n"
+    end
+  end
+
+end

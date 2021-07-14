@@ -1,0 +1,18 @@
+{
+    "patient": {
+        "current_version": "1.7.3",
+        "release_date": 20210501,
+        "release_notes": [
+            "Bug fixes",
+            "UI/UX improvements"
+        ]
+    },
+    "doctor": {
+        "current_version": "1.7.3",
+        "release_date": 20210501,
+        "release_notes": [
+            "Bug fixes",
+            "UI/UX improvements"
+        ]
+    }
+}
